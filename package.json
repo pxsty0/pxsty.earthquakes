@@ -1,0 +1,34 @@
+{
+  "name": "pxsty.earthquakes",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pxsty0/pxsty.earthquakes.git"
+  },
+  "author": "pxsty",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pxsty0/pxsty.earthquakes/issues"
+  },
+  "homepage": "https://github.com/pxsty0/pxsty.earthquakes#readme",
+  "description": "Türkiye de gerçekleşen depremleri listeler",
+  "keywords": [
+    "deprem",
+    "son",
+    "depremler",
+    "afad",
+    "kandilli",
+    "türkiye",
+    "son",
+    "depremler"
+  ],
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "node-fetch": "^2.6.9",
+    "pxsty.earthquakes": "^1.0.0"
+  }
+}
