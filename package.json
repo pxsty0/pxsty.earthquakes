@@ -1,10 +1,16 @@
 {
   "name": "pxsty.earthquakes",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.1.2",
+  "main": "dist/index.js",
+  "types": "dist/types.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pxsty0/pxsty.earthquakes.git"
@@ -27,8 +33,10 @@
     "depremler"
   ],
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12",
-    "node-fetch": "^2.6.9",
-    "pxsty.earthquakes": "^1.0.0"
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1"
   }
 }
