@@ -1,46 +1,37 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { AFAD_URL } from "./consts";
+import type { Earthquake } from "./types/earthquake";
 
-type EarthquakeData = {
-  date: string;
-  latitude: number;
-  longitude: number;
-  depth: number;
-  type: "ML" | "MW";
-  size: number;
-  place: string;
-};
-
-const getAllEarthquakes = async (): Promise<{
-  type: "SUCCESS" | "ERROR";
-  data: EarthquakeData[];
-}> => {
+const getAllEarthquakes = async (): Promise<Earthquake[]> => {
   try {
     const { data } = await axios.get(AFAD_URL);
     const $ = cheerio.load(data);
-    const earthquakes: EarthquakeData[] = [];
+
+    const earthquakes: Earthquake[] = [];
 
     const rows = $("table tbody tr");
-    for (let i = 0; i < rows.length; i++) {
-      const columns = $(rows[i]).find("td");
-      if (columns.length < 7) continue;
 
-      const date = $(columns[0]).text().trim();
-      const latitude = parseFloat($(columns[1]).text().trim());
-      const longitude = parseFloat($(columns[2]).text().trim());
-      const depth = parseFloat($(columns[3]).text().trim());
-      const typeText = $(columns[4]).text().trim().toUpperCase();
-      const type = typeText === "ML" || typeText === "MW" ? typeText : "ML";
-      const size = parseFloat($(columns[5]).text().trim());
-      const place = $(columns[6]).text().trim();
+    rows.each((i, row) => {
+      const columns = $(row).find("td");
+      if (columns.length < 7) return;
+
+      const extractColumnText = (idx: number) => $(columns[idx]).text().trim();
+
+      const date = new Date(extractColumnText(0));
+      const latitude = parseFloat(extractColumnText(1));
+      const longitude = parseFloat(extractColumnText(2));
+      const depth = parseFloat(extractColumnText(3));
+      const type = extractColumnText(4) as Earthquake["type"];
+      const size = parseFloat(extractColumnText(5));
+      const place = extractColumnText(6);
 
       if (
         !isNaN(latitude) &&
         !isNaN(longitude) &&
         !isNaN(depth) &&
         !isNaN(size)
-      ) {
+      )
         earthquakes.push({
           date,
           latitude,
@@ -50,15 +41,17 @@ const getAllEarthquakes = async (): Promise<{
           size,
           place,
         });
-      }
-    }
+    });
 
-    return { type: "SUCCESS", data: earthquakes };
-  } catch (error) {
-    return { type: "ERROR", data: [] };
+    return earthquakes;
+  } catch (err: any) {
+    throw new Error(
+      "An error occurred while fetching earthquakes :" + err.toString()
+    );
   }
 };
 
 export default {
   getAllEarthquakes,
 };
+export type { Earthquake };
