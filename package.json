@@ -1,6 +1,6 @@
 {
   "name": "pxsty.earthquakes",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "main": "dist/index.js",
   "types": "dist/types.d.ts",
   "scripts": {
@@ -37,6 +37,7 @@
     "cheerio": "^1.0.0-rc.12"
   },
   "devDependencies": {
-    "@types/node": "^22.13.1"
+    "@types/node": "^22.13.1",
+    "typescript": "^5.8.3"
   }
 }

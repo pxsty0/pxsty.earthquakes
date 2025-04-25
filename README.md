@@ -24,11 +24,11 @@ yarn add pxsty.earthquakes
 import EarthquakeAPI from "pxsty.earthquakes";
 
 const fetchEarthquakes = async () => {
-  const response = await EarthquakeAPI.getAllEarthquakes();
-  if (response.type === "SUCCESS") {
-    console.log("Depremler:", response.data);
-  } else {
-    console.error("Veri çekme hatası!");
+  const earthquakes = await EarthquakeAPI.getAllEarthquakes();
+  try {
+    console.log("Depremler:", earthquakes);
+  } catch (err) {
+    console.error("Veri çekme hatası!", err);
   }
 };
 
@@ -40,14 +40,14 @@ fetchEarthquakes();
 ```js
 const EarthquakeAPI = require("pxsty.earthquakes").default;
 
-async function fetchEarthquakes() {
-  const response = await EarthquakeAPI.getAllEarthquakes();
-  if (response.type === "SUCCESS") {
-    console.log("Depremler:", response.data);
-  } else {
-    console.error("Veri çekme hatası!");
+const fetchEarthquakes = async () => {
+  const earthquakes = await EarthquakeAPI.getAllEarthquakes();
+  try {
+    console.log("Depremler:", earthquakes);
+  } catch (err) {
+    console.error("Veri çekme hatası!", err);
   }
-}
+};
 
 fetchEarthquakes();
 ```
@@ -57,29 +57,17 @@ fetchEarthquakes();
 Başarılı bir istek aşağıdaki formatta bir dizi deprem verisi döndürür:
 
 ```json
-{
-  "type": "SUCCESS",
-  "data": [
-    {
-      "date": "2024-02-06 12:34:56",
-      "latitude": 38.9637,
-      "longitude": 35.2433,
-      "depth": 10.2,
-      "type": "ML",
-      "size": 4.5,
-      "place": "Ankara, Türkiye"
-    }
-  ]
-}
-```
-
-Eğer hata oluşursa:
-
-```json
-{
-  "type": "ERROR",
-  "data": []
-}
+[
+  {
+    date: 2025-04-25T08:41:51.000Z,
+    latitude: 39.35639,
+    longitude: 28.85528,
+    depth: 7.17,
+    type: 'ML',
+    size: 1.4,
+    place: 'Dursunbey (Balıkesir)'
+  }
+]
 ```
 
 ## Desteklenen Magnitüd Türleri
